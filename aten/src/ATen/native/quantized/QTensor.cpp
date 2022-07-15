@@ -329,6 +329,10 @@ std::tuple<Tensor, Tensor> choose_qparams_optimized(
     const int64_t n_bins,
     const double ratio,
     int64_t bit_width) {
+    
+  if (numel < 0 || numel > input_tensor.numel()) {
+    TORCH_CHECK(false, "numel is out of the bound of input tensor");
+  }
 
   const float* input_row = input_tensor.data_ptr<float>();
   float xmin = *std::min_element(input_row, input_row + numel);
